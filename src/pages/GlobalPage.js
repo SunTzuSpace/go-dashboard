@@ -59,7 +59,7 @@ function GlobalPage() {
     })
   }, [])
 
-  document.title = `Defi Llama - DeFi Dashboard`;
+  document.title = `DefiLlama - DeFi Dashboard`;
 
   return (
     <PageWrapper>
