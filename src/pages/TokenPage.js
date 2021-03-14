@@ -112,7 +112,6 @@ function TokenPage({ protocol, history }) {
   const fetchColor = (tokenAddress) => {
 
     if (name) {
-
       var path = `https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/${isAddress(
         tokenAddress
       )}/logo.png`
