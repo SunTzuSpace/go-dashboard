@@ -92,7 +92,7 @@ function TokenPage({ protocol, history }) {
   const address = getTokenAddressFromName(allTokens, protocol)
   const id = getTokenIdFromName(allTokens, protocol)
   const tokenData = useTokenData(id, protocol)
-  const { name, symbol, url, description, tvl, priceUSD, priceChangeUSD, logo, audits, category,tvlList: chartData } = tokenData
+  const { name, symbol, url, description, tvl, priceUSD, priceChangeUSD, logo, audits, category, tvlList: chartData } = tokenData
 
   // price
   const price = priceUSD ? formattedNum(priceUSD, true) : ''
@@ -306,12 +306,14 @@ function TokenPage({ protocol, history }) {
               p={20}
             >
               <TokenDetailsLayout>
-              <Column>
-                <TYPE.main>Category</TYPE.main>
-                <TYPE.main style={{ marginTop: '.5rem' }} fontSize={24} fontWeight="500">
-                  <BasicLink to={`/protocols/${category.toLowerCase()}`}><FormattedName text={category} maxCharacters={16} /></BasicLink>
-                </TYPE.main>
-              </Column>
+                {typeof category === 'string' ?
+                  <Column>
+                    <TYPE.main>Category</TYPE.main>
+                    <TYPE.main style={{ marginTop: '.5rem' }} fontSize={24} fontWeight="500">
+                      <BasicLink to={`/protocols/${category.toLowerCase()}`}><FormattedName text={category} maxCharacters={16} /></BasicLink>
+                    </TYPE.main>
+                  </Column> :
+                  <></>}
                 <Column>
                   <TYPE.main>
                     <HeadHelp title="Audits" text="Audits are not a guarantee of security." />
