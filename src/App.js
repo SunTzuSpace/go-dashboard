@@ -127,9 +127,9 @@ function App() {
               strict
               path="/chain/:chain"
               render={({ match }) => {
-                if (Object.values(allTokens).some(token => token.chain === match.params.chain)) {
+                if (Object.values(allTokens).some(token => (token.chain || 'none').toLowerCase() === match.params.chain.toLowerCase())) {
                   return <LayoutWrapper savedOpen={savedOpen} setSavedOpen={setSavedOpen}>
-                    <GlobalPage chain={match.params.chain} />
+                    <GlobalPage chain={match.params.chain.toLowerCase()} />
                   </LayoutWrapper>
                 } else {
                   return <Redirect to="/home" />

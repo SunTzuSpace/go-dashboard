@@ -48,7 +48,7 @@ function GlobalPage({ chain }) {
   if (chain !== undefined) {
     if (oldChain !== chain && chainChartData[chain] === undefined) {
       setOldChain(chain);
-      fetchAPI(`https://api.defillama.com/charts/${chain.toLowerCase()}`).then(chart => setChainChartData({
+      fetchAPI(`https://api.defillama.com/charts/${chain}`).then(chart => setChainChartData({
         ...chainChartData,
         [chain]: chart
       }))
@@ -63,7 +63,7 @@ function GlobalPage({ chain }) {
         chartData[chartData.length - 2].totalLiquidityUSD) *
         100
     }
-    allTokens = Object.fromEntries(Object.entries(allTokens).filter(token => chain === token[1].chain))
+    allTokens = Object.fromEntries(Object.entries(allTokens).filter(token => chain === (token[1].chain || 'none').toLowerCase()))
   }
   const tokensList = Object.values(allTokens)
     .sort((token1, token2) => Number(token2.tvl) - Number(token1.tvl))
