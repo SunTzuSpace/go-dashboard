@@ -17,7 +17,6 @@ function AllTokensPage(props) {
   if (category) {
     allTokens = Object.entries(allTokens).filter(([key, token]) => token.category === category)
       .reduce((acc, curr) => {
-        console.log(curr)
         acc[curr[0]] = curr[1];
         return acc
       }, {});

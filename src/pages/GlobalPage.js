@@ -1,8 +1,10 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { withRouter } from 'react-router-dom'
 import styled from 'styled-components'
 
 import { AutoRow, RowBetween } from '../components/Row'
+import Loader from '../components/LocalLoader'
+import ProtocolChart from '../components/ProtocolChart'
 import { AutoColumn } from '../components/Column'
 import TopTokenList from '../components/TokenList'
 import GlobalChart from '../components/GlobalChart'
@@ -18,6 +20,7 @@ import { transparentize } from 'polished'
 import { CustomLink } from '../components/Link'
 
 import { PageWrapper, ContentWrapper } from '../components'
+import { fetchAPI } from '../contexts/API'
 
 const ListOptions = styled(AutoRow)`
   height: 40px;
@@ -30,23 +33,46 @@ const ListOptions = styled(AutoRow)`
   }
 `
 
-function GlobalPage() {
+function GlobalPage({ chain }) {
   // get data for lists and totals
-  const allTokens = useAllTokenData()
+  let allTokens = useAllTokenData()
   //const transactions = useGlobalTransactions()
   const globalData = useGlobalData()
+  const [chainChartData, setChainChartData] = useState({});
+  const [oldChain, setOldChain] = useState(undefined)
 
-  const tokensList = Object.keys(allTokens)
-    .map(token => allTokens[token])
-    .sort((token1, token2) => token1.tvl > token2.tvl)
+  let { totalVolumeUSD, volumeChangeUSD } = globalData
+
+  console.log(chain, chainChartData[chain])
+  console.log(chainChartData[chain] !== undefined)
+  if (chain !== undefined) {
+    if (oldChain !== chain && chainChartData[chain] === undefined) {
+      setOldChain(chain);
+      fetchAPI(`https://api.defillama.com/charts/${chain.toLowerCase()}`).then(chart => setChainChartData({
+        ...chainChartData,
+        [chain]: chart
+      }))
+    }
+    const chartData = chainChartData[chain];
+    if (chartData === undefined) {
+      totalVolumeUSD = 0;
+      volumeChangeUSD = 0;
+    } else {
+      totalVolumeUSD = chartData[chartData.length - 1].totalLiquidityUSD
+      volumeChangeUSD = ((chartData[chartData.length - 1].totalLiquidityUSD - chartData[chartData.length - 2].totalLiquidityUSD) /
+        chartData[chartData.length - 2].totalLiquidityUSD) *
+        100
+    }
+    allTokens = Object.fromEntries(Object.entries(allTokens).filter(token => chain === token[1].chain))
+  }
+  const tokensList = Object.values(allTokens)
+    .sort((token1, token2) => Number(token2.tvl) - Number(token1.tvl))
 
   const topToken = { name: 'Uniswap', tvl: '0' }
   if (tokensList.length > 0) {
-    topToken.name = tokensList[10]?.name
-    topToken.tvl = tokensList[10]?.tvl
+    topToken.name = tokensList[0]?.name
+    topToken.tvl = tokensList[0]?.tvl
   }
-
-  const { totalVolumeUSD, volumeChangeUSD } = globalData
 
   // breakpoints
   const below800 = useMedia('(max-width: 800px)')
@@ -61,13 +87,19 @@ function GlobalPage() {
 
   document.title = `DefiLlama - DeFi Dashboard`;
 
+  const chart = chain === undefined ? <GlobalChart display="liquidity" /> :
+    chainChartData[chain] !== undefined ? <ProtocolChart
+      chartData={chainChartData[chain]}
+      protocol={chain}
+    /> : <Loader />;
+
   return (
     <PageWrapper>
-    <ThemedBackground backgroundColor={transparentize(0.8, '#445ed0')} />
+      <ThemedBackground backgroundColor={transparentize(0.8, '#445ed0')} />
       <ContentWrapper>
         <div>
           <AutoColumn gap="24px" style={{ paddingBottom: below800 ? '0' : '24px' }}>
-            <TYPE.largeHeader>{below800 ? 'Defi Dashboard' : 'Defi Dashboard'}</TYPE.largeHeader>
+            <TYPE.largeHeader>Defi Dashboard</TYPE.largeHeader>
             <Search />
           </AutoColumn>
           {below800 && ( // mobile card
@@ -167,14 +199,14 @@ function GlobalPage() {
                 </Panel>
               </AutoColumn>
               <Panel style={{ height: '100%', minHeight: '300px' }}>
-                <GlobalChart display="liquidity" />
+                {chart}
               </Panel>
             </AutoRow>
           )}
           {below800 && (
             <AutoColumn style={{ marginTop: '6px' }} gap="24px">
               <Panel style={{ height: '100%', minHeight: '300px' }}>
-                <GlobalChart display="liquidity" />
+                {chart}
               </Panel>
             </AutoColumn>
           )}

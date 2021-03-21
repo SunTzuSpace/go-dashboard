@@ -137,7 +137,7 @@ function SideNav({ history }) {
                 {Object.entries(categories)
                   .filter(([key, data]) => data.sidebar)
                   .map(([categoryName, categoryData]) =>
-                    <BasicLink to={`/protocols/${categoryName}`}>
+                    <BasicLink to={`/protocols/${categoryName}`} key={categoryName}>
                       <Option
                         activeText={
                           (history.location.pathname.split('/')[1] === 'protocols' &&
