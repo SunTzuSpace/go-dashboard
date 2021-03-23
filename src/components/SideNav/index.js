@@ -166,6 +166,11 @@ function SideNav({ history }) {
               </Link>
             </HeaderText>
             <HeaderText>
+              <Link href="https://discord.gg/buPFYXzDDd" target="_blank">
+                Discord
+              </Link>
+            </HeaderText>
+            <HeaderText>
               <Link href="https://t.me/defillama_tg" target="_blank">
                 Telegram
               </Link>
