@@ -18,7 +18,7 @@ function AllTokensPage() {
   }, [])
 
   const below600 = useMedia('(max-width: 800px)')
-  document.title = `TVL Rankings - Defi Llama`;
+  document.title = `TVL Rankings - SunTzu`;
   const DashGrid = styled.div`
     display: grid;
     grid-gap: 1em;
@@ -39,19 +39,19 @@ function AllTokensPage() {
         </RowBetween>
         <Panel style={{ marginTop: '6px', padding: below600 && '1rem 0 0 0 ' }}>
         <DashGrid center={true} style={{ height: 'fit-content', padding: '0 0 1rem 0' }}>
-          <TYPE.main area="account">Why DefiLlama? <span  role="img" aria-label="heart emoji">❤️</span></TYPE.main>
+          <TYPE.main area="account">Why SunTzu? <span  role="img" aria-label="katana emoji">🗡️</span></TYPE.main>
           <Divider />
 
-          <TYPE.light>DefiLlama is committed to accurate data without ads or sponsored content and transparency.</TYPE.light>
-          <TYPE.light>We list DeFi projects from all chains.</TYPE.light>
+          <TYPE.light>SunTzuSpace is committed to accurate data without ads or sponsored content and transparency.</TYPE.light>
+          <TYPE.light>We list cryptography projects, strategies, oracles and bridges.</TYPE.light>
           <Divider />
 
-          <TYPE.light>Thanks to <Link href="https://www.coingecko.com/">CoinGecko</Link>, <Link href="https://snx.tools/">SNX Tools</Link> and <Link href="https://pickle-jar.info/">PickleJar.info</Link></TYPE.light>
+          <TYPE.light>Thanks to <Link href="https://www.gitcoin.co/grants">Gitcoin.co</Link>, <Link href="https://thegraph.com//">The Graph Protocol</Link></TYPE.light>
 
           <Divider />
-          <TYPE.light>Based on <Link href="https://github.com/Uniswap/uniswap-info">Uniswap.info</Link> and its fork <Link href="https://github.com/sushiswap/sushiswap-vision">SushiSwap.vision</Link></TYPE.light>
+          <TYPE.light>Based on <Link href="https://github.com/Uniswap/uniswap-info">Uniswap.info</Link> and its fork <Link href="https://github.com/DefiLlama/defillama-app">defillama.com</Link></TYPE.light>
           <Divider />
-          <TYPE.light>Contact us on <Link href="https://twitter.com/defillama">Twitter</Link>, @defillama on <Link href="https://t.me/defillama">Telegram</Link>  or  defillama@protonmail.com</TYPE.light>
+          <TYPE.light>Contact us on <Link href="https://twitter.com/suntzuspace">Twitter</Link>, @suntzuspace on <Link href="https://t.me/codingsh">Telegram</Link>  or  codingsh@pm.me</TYPE.light>
           <Divider />
 
         </DashGrid>

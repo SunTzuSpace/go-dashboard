@@ -27,11 +27,11 @@ function AllTokensPage(props) {
   }, [])
 
   const below600 = useMedia('(max-width: 800px)')
-  let title = `TVL Rankings`
+  let title = `Rankings`
   if (categoryName) {
-    title = `${categoryName} TVL Rankings`
+    title = `${categoryName} Rankings`
   }
-  document.title = `${title} - Defi Llama`;
+  document.title = `${title} - SunTzuSpace`;
 
   return (
     <PageWrapper>

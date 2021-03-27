@@ -32,3 +32,10 @@ export const blockClient = new ApolloClient({
   }),
   cache: new InMemoryCache()
 })
+
+export const grantsClient = new ApolloClient({
+  link: new HttpLink({
+    uri: 'https://api.thegraph.com/subgraphs/name/developerfred/gitcoin-grants'
+  }),
+  cache: new InMemoryCache()
+})

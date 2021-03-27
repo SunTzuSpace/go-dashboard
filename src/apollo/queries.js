@@ -18,6 +18,19 @@ export const SUBGRAPH_HEALTH = gql`
   }
 `
 
+export const SUBGRAPH_GRANTS = gql`
+  query donations {
+    indexingStatusForCurrentVersion(subgraphName: "developerfred/gitcoin-grants") {
+      depositMades(first: 200, orderBy: timestamp) {
+        id
+        token
+        amount
+        user
+      }
+    }
+  }
+`
+
 export const V1_DATA_QUERY = gql`
   query uniswap($date: Int!, $date2: Int!) {
     current: uniswap(id: "1") {
