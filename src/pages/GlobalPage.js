@@ -85,7 +85,7 @@ function GlobalPage({ chain }) {
     })
   }, [])
 
-  document.title = `DefiLlama - DeFi Dashboard`;
+  document.title = `SunTzu.space - Dashboard`;
 
   const chart = chain === undefined ? <GlobalChart display="liquidity" /> :
     chainChartData[chain] !== undefined ? <ProtocolChart
